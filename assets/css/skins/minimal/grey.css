@@ -1,7 +1,7 @@
-/* iCheck plugin Minimal skin, aero
+/* iCheck plugin Minimal skin, grey
 ----------------------------------- */
-.icheckbox_minimal-aero,
-.iradio_minimal-aero {
+.icheckbox_minimal-grey,
+.iradio_minimal-grey {
     display: inline-block;
     *display: inline;
     vertical-align: middle;
@@ -9,50 +9,50 @@
     padding: 0;
     width: 18px;
     height: 18px;
-    background: url(aero.png) no-repeat;
+    background: url(grey.png) no-repeat;
     border: none;
     cursor: pointer;
 }
 
-.icheckbox_minimal-aero {
+.icheckbox_minimal-grey {
     background-position: 0 0;
 }
-    .icheckbox_minimal-aero.hover {
+    .icheckbox_minimal-grey.hover {
         background-position: -20px 0;
     }
-    .icheckbox_minimal-aero.checked {
+    .icheckbox_minimal-grey.checked {
         background-position: -40px 0;
     }
-    .icheckbox_minimal-aero.disabled {
+    .icheckbox_minimal-grey.disabled {
         background-position: -60px 0;
         cursor: default;
     }
-    .icheckbox_minimal-aero.checked.disabled {
+    .icheckbox_minimal-grey.checked.disabled {
         background-position: -80px 0;
     }
 
-.iradio_minimal-aero {
+.iradio_minimal-grey {
     background-position: -100px 0;
 }
-    .iradio_minimal-aero.hover {
+    .iradio_minimal-grey.hover {
         background-position: -120px 0;
     }
-    .iradio_minimal-aero.checked {
+    .iradio_minimal-grey.checked {
         background-position: -140px 0;
     }
-    .iradio_minimal-aero.disabled {
+    .iradio_minimal-grey.disabled {
         background-position: -160px 0;
         cursor: default;
     }
-    .iradio_minimal-aero.checked.disabled {
+    .iradio_minimal-grey.checked.disabled {
         background-position: -180px 0;
     }
 
 /* HiDPI support */
 @media (-o-min-device-pixel-ratio: 5/4), (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
-    .icheckbox_minimal-aero,
-    .iradio_minimal-aero {
-        background-image: url(aero@2x.png);
+    .icheckbox_minimal-grey,
+    .iradio_minimal-grey {
+        background-image: url(grey@2x.png);
         -webkit-background-size: 200px 20px;
         background-size: 200px 20px;
     }
