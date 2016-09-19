@@ -19,11 +19,11 @@
 require_once __DIR__ . "/../BaseExample.php";
 
 /**
- * Generates a Column Chart for a report.
+ * Generates a Line Chart for a report.
  *
  * @author Silvano Luciani <silvano.luciani@gmail.com>
  */
-class GenerateColumnChart extends BaseExample {
+class GenerateLineChart extends BaseExample {
   public function render() {
     $startDate = $this->getSixMonthsBeforeNow();
     $endDate = $this->getNow();
@@ -52,7 +52,7 @@ class GenerateColumnChart extends BaseExample {
       array('number', 'Matched ad requests'),
       array('number', 'Individual ad impressions')
     );
-    $type = 'ColumnChart';
+    $type = 'LineChart';
     $options = json_encode(
       array('title' => 'Performances per month')
     );

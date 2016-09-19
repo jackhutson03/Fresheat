@@ -19,19 +19,18 @@
 require_once __DIR__ . "/../BaseExample.php";
 
 /**
- * Generates a Column Chart for a report.
+ * Generates a Pie Chart for a report.
  *
  * @author Silvano Luciani <silvano.luciani@gmail.com>
  */
-class GenerateColumnChart extends BaseExample {
+class GeneratePieChart extends BaseExample {
   public function render() {
     $startDate = $this->getSixMonthsBeforeNow();
     $endDate = $this->getNow();
     $optParams = array(
-        'metric' => array('PAGE_VIEWS', 'AD_REQUESTS', 'MATCHED_AD_REQUESTS',
-            'INDIVIDUAL_AD_IMPRESSIONS'),
-        'dimension' => array('MONTH'),
-        'sort' => 'MONTH'
+        'metric' => array('AD_REQUESTS'),
+        'dimension' => array('AD_CLIENT_ID'),
+        'sort' => 'AD_CLIENT_ID'
     );
     // Retrieve report.
     $report = $this->adSenseService->reports
@@ -40,21 +39,15 @@ class GenerateColumnChart extends BaseExample {
     // We need to convert the metrics to numeric values for the chart.
     foreach ($data as &$row) {
       $row[1] = (int)$row[1];
-      $row[2] = (int)$row[2];
-      $row[3] = (int)$row[3];
-      $row[4] = (int)$row[4];
     }
     $data = json_encode($data);
     $columns = array(
-      array('string', 'Month'),
-      array('number', 'Page views'),
-      array('number', 'Ad requests'),
-      array('number', 'Matched ad requests'),
-      array('number', 'Individual ad impressions')
+      array('string', 'Ad client id'),
+      array('number', 'Ad requests')
     );
-    $type = 'ColumnChart';
+    $type = 'PieChart';
     $options = json_encode(
-      array('title' => 'Performances per month')
+      array('title' => 'Ads requests per ad client id')
     );
     print generateChartHtml($data, $columns, $type, $options);
   }

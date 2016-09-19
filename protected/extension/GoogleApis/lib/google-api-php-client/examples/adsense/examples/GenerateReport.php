@@ -19,44 +19,39 @@
 require_once __DIR__ . "/../BaseExample.php";
 
 /**
- * Generates a Column Chart for a report.
+ * Retrieves a report for the specified ad client.
+ *
+ * To get ad clients, run getAllAdClients.
+ * Tags: reports.generate
  *
  * @author Silvano Luciani <silvano.luciani@gmail.com>
  */
-class GenerateColumnChart extends BaseExample {
+class GenerateReport extends BaseExample {
   public function render() {
     $startDate = $this->getSixMonthsBeforeNow();
     $endDate = $this->getNow();
     $optParams = array(
-        'metric' => array('PAGE_VIEWS', 'AD_REQUESTS', 'MATCHED_AD_REQUESTS',
-            'INDIVIDUAL_AD_IMPRESSIONS'),
-        'dimension' => array('MONTH'),
-        'sort' => 'MONTH'
+      'metric' => array(
+        'PAGE_VIEWS', 'AD_REQUESTS', 'AD_REQUESTS_COVERAGE',
+        'CLICKS', 'AD_REQUESTS_CTR', 'COST_PER_CLICK', 'AD_REQUESTS_RPM',
+        'EARNINGS'),
+      'dimension' => 'DATE',
+      'sort' => 'DATE',
+      'filter' => array(
+        'AD_CLIENT_ID==' . AD_CLIENT_ID
+      )
     );
     // Retrieve report.
     $report = $this->adSenseService->reports
         ->generate($startDate, $endDate, $optParams);
-    $data = $report['rows'];
-    // We need to convert the metrics to numeric values for the chart.
-    foreach ($data as &$row) {
-      $row[1] = (int)$row[1];
-      $row[2] = (int)$row[2];
-      $row[3] = (int)$row[3];
-      $row[4] = (int)$row[4];
+
+    if (isset($report['rows'])) {
+      printReportTableHeader($report['headers']);
+      printReportTableRows($report['rows']);
+      printReportTableFooter();
+    } else {
+      printNoResultForTable(count($report['headers']));
     }
-    $data = json_encode($data);
-    $columns = array(
-      array('string', 'Month'),
-      array('number', 'Page views'),
-      array('number', 'Ad requests'),
-      array('number', 'Matched ad requests'),
-      array('number', 'Individual ad impressions')
-    );
-    $type = 'ColumnChart';
-    $options = json_encode(
-      array('title' => 'Performances per month')
-    );
-    print generateChartHtml($data, $columns, $type, $options);
   }
 }
 
