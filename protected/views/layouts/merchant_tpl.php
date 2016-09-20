@@ -35,84 +35,100 @@
 <!--ICHECK-->
 
 <link href="<?php echo Yii::app()->request->baseUrl; ?>/assets/vendor/chosen/chosen.css" rel="stylesheet" />
-
 <link href="<?php echo Yii::app()->request->baseUrl; ?>/assets/vendor/fancybox/source/jquery.fancybox.css" rel="stylesheet" />
 
+<!--STARTS JQPLOT-->
+<link href="<?php echo Yii::app()->request->baseUrl; ?>/assets/vendor/jqplot/jquery.jqplot.min.css" rel="stylesheet">
+<!--END JQPLOT-->
+
 <link href="<?php echo Yii::app()->request->baseUrl; ?>/assets/vendor/jQuery-TE_v.1.4.0/jquery-te-1.4.0.css" rel="stylesheet">
+
+<link href="<?php echo Yii::app()->request->baseUrl; ?>/assets/vendor/intel/build/css/intlTelInput.css" rel="stylesheet">
 
 <link href="<?php echo Yii::app()->request->baseUrl; ?>/assets/vendor/rupee/rupyaINR.css" rel="stylesheet" />
 
 </head>
-<body id="admin">
-
-<?php  $admin_info=(array)Yii::app()->functions->getAdminInfo(); ?>
-
-
+<body id="merchant">
 
 <div class="header_wrap">
   <div class="left">
-   <h1><?php echo Yii::t("default","ADMIN")?></h1>
+   <a href="<?php echo Yii::app()->request->baseUrl; ?>/merchant"><h1><?php echo Yii::t("default","Merchant")?></h1></a>
   </div>
-      
+    
+  <?php $merchant_info=(array)Yii::app()->functions->getMerchantInfo();?>  
+    
   <div class="right">  
-      
-  <div class="left" style="width:150px;">
-  <a target="_blank" class="uk-button" href="<?php echo Yii::app()->request->baseUrl;?>/store"><i class="fa fa-cutlery"></i> <?php echo t("View Website")?></a>
-  </div>
   
 	<div data-uk-dropdown="{mode:'click'}" class="uk-button-dropdown">
-	<button class="uk-button"><i class="fa fa-user"></i> <?php echo $admin_info['username'] ?> <i class="uk-icon-caret-down"></i></button>
+	<button class="uk-button"><i class="fa fa-user">
+	 </i> 
+	  <?php echo Yii::app()->functions->getMerchantUserName()?> <i class="uk-icon-caret-down">
+	 </i>
+	</button>
 	<div class="uk-dropdown" >
-	<ul class="uk-nav uk-nav-dropdown">
-	    <li><a href="<?php echo Yii::app()->request->baseUrl; ?>/admin/profile"><i class="fa fa-user"></i> <?php echo Yii::t("default","Profile")?></a></li>	    
-	    <li><a href="<?php echo Yii::app()->request->baseUrl."/admin/login/logout/true"?>"><i class="fa fa-sign-out"></i> <?php echo Yii::t("default","Logout")?> </a></li>	    
+	<ul class="uk-nav uk-nav-dropdown">	   
+        <?php if (isset($merchant_info[0]->user_access)):?>
+	    <li><a href="<?php echo websiteUrl()."/merchant/profile"?>"><i class="fa fa-user"></i> Profile</a></li>
+	    <?php else :?>
+	    <li><a href="<?php echo websiteUrl()."/merchant/Merchant"?>"><i class="fa fa-user"></i> Profile</a></li>
+	    <?php endif;?>
+	    <li>
+	      <a href="<?php echo Yii::app()->request->baseUrl."/merchant/login/logout/true"?>">
+	       <i class="fa fa-sign-out"></i> <?php echo Yii::t("default","Logout")?>
+	      </a>
+	    </li>	    
 	</ul>
 	</div>
 	</div>
     
   </div> <!--END RIGHT-->
-  
-   
+    
   <div class="right">
-  <h3 class="uk-button uk-button-danger"><?php echo t("Commission last 30 days")?>: 
-  <span class="commission_total_1 commission_loader"></span>
-  </h3>
-  </div> <!--end right-->  
-  
+    <?php //$merchant_info=(array)Yii::app()->functions->getMerchantInfo();?>
+    <?php if (is_array($merchant_info) && count($merchant_info)>=1):?>
+     <h4 class="uk-h3"><?php echo Yii::t("default","Merchant Name")?>: 
+     <?php     
+     if (strlen($merchant_info[0]->restaurant_name)>=15){
+     	echo stripslashes(( substr($merchant_info[0]->restaurant_name,0,15)."..." ));  
+     } else echo stripslashes(($merchant_info[0]->restaurant_name));      
+      ?>
+     <a class="merchant-status" href="<?php echo Yii::app()->request->baseUrl; ?>/merchant/MerchantStatus" ></a>
+     </h4>
+    <?php endif;?>
+  </div> <!--RIGHT-->
   <div class="right">
-  <h3 class="uk-button uk-button-success"><?php echo t("Commission today")?>: 
-  <span class="commission_total_2 commission_loader"></span>
-  </h3>
-  </div> <!--end right-->
-  
-  
+  <div class="notice-wrap"></div>
+  <h4 class="uk-h3"><?php echo Yii::t("default","Published Merchant")?>?
+  <?php 
+  echo CHtml::checkBox('is_ready',false,array(
+    'class'=>"icheck is_ready"
+  ))
+  ?>
+  <a href="javascript:;" data-uk-tooltip="{pos:'bottom-left'}" title="<?php echo Yii::t("default","Check this box to published your merchant, if this box is not check your merchant will not show on search result.")?>" ><i class="fa fa-info-circle"></i>
+</a>
+  </h4>
+  </div>
+    
   <div class="right">
-  <h3 class="uk-button uk-button-primary"><?php echo t("Total Commission")?>: 
-  <span class="commission_total_3 commission_loader"></span>
-  </h3>
-  </div> <!--end right-->
+  <a target="_blank" class="uk-button" href="<?php echo Yii::app()->request->baseUrl."/store/menu/merchant/".$merchant_info[0]->restaurant_slug;?>">
+  <i class="fa fa-cutlery"></i> <?php echo t("View")?></a>
+  </div>
   
+  <?php if ( $merchant_info[0]->is_commission==2):?>
+  <div class="right">
+  <h3 class="uk-button uk-button-success"><?php echo t("Your balance")?>: 
+  <span class="merchant_total_balance commission_loader"></span>
+  </h3>
+  </div>
+  <?php endif;?>
   
   <div class="clear"></div>
 </div> <!--END header_wrap-->
 
 <div class="main_wrapper">
   <div class="left_panel left">
-      <div class="menu">
-        <!--<ul>
-         <li>
-         <a href="<?php echo Yii::app()->request->baseUrl."/admin"?>"><i class="fa fa-home"></i> Dashboard</a>
-         </li>
-         
-         <li>
-         <a href="<?php echo Yii::app()->request->baseUrl."/admin/merchant"?>"><i class="fa fa-cutlery"></i> Merchant</a>
-         </li>         
-         
-         <li>
-         <a href="<?php echo Yii::app()->request->baseUrl."/admin/login/logout/true"?>"><i class="fa fa-sign-out"></i> Logout</a></li>  
-         
-        </ul>-->
-        <?php $this->widget('zii.widgets.CMenu', Yii::app()->functions->adminMenu());?>
+      <div class="menu">      
+        <?php $this->widget('zii.widgets.CMenu', Yii::app()->functions->merchantMenu());?>
       </div>
   </div>
   <div class="left main_content">
@@ -120,7 +136,9 @@
        <div class="breadcrumbs">
         <div class="inner">
           <h2 class="uk-h2"><?php echo $this->crumbsTitle;?></h2>
-          <?php Widgets::languageBar("admin",true);?>
+          <?php Widgets::smsBalance();?>
+          <?php Widgets::FaxBalance();?>
+          <?php Widgets::languageBar("merchant",true);?>
         </div>
        </div> <!--breadcrumbs-->
        
@@ -133,8 +151,7 @@
   <div class="clear"></div>
 </div> <!--END main_wrapper-->
 
-<?php echo CHtml::hiddenField("currentController","admin")?>
-<?php echo CHtml::hiddenField("wd_payout_alert",yii::app()->functions->getOptionAdmin('wd_payout_notification'))?>
+<?php echo CHtml::hiddenField("currentController","merchant")?>
 
 <?php 
 $website_date_picker_format=yii::app()->functions->getOptionAdmin('website_date_picker_format');
@@ -146,11 +163,33 @@ if ( !empty($website_time_picker_format)){
 	echo CHtml::hiddenField('website_time_picker_format',$website_time_picker_format);
 }
 ?>
-
 </body>
 
-<!--<script src="//code.jquery.com/jquery-1.10.2.min.js" type="text/javascript"></script>  -->
-<script src="<?php echo Yii::app()->request->baseUrl;?>/assets/vendor/jquery-1.10.2.min.js" type="text/javascript"></script>  
+<!--*****************************************
+NOTIFICATION PLAYER STARTS HERE
+*****************************************-->
+<?php 
+$merchant_id=Yii::app()->functions->getMerchantID();
+$enabled_alert_sound=Yii::app()->functions->getOption("enabled_alert_sound",$merchant_id);
+$merchant_booking_alert=Yii::app()->functions->getOption("merchant_booking_alert",$merchant_id);
+?>
+<input type="hidden" id="alert_off" name="alert_off" value="<?php echo $enabled_alert_sound?>">
+<?php echo CHtml::hiddenField("booking_alert",$merchant_booking_alert);?>
+<?php //if ( $enabled_alert_sound==""):?>
+<div style="display:none;">
+<div id="jquery_jplayer_1"></div>
+<div id="jp_container_1">
+<a href="#" class="jp-play">Play</a>
+<a href="#" class="jp-pause">Pause</a>
+</div>
+</div>
+<?php //endif;?>
+<!--*****************************************
+NOTIFICATION PLAYER END HERE
+*****************************************-->
+
+<script src="//code.jquery.com/jquery-1.10.2.min.js" type="text/javascript"></script>  
+<!--<script src="<?php echo Yii::app()->request->baseUrl;?>/assets/vendor/jquery-1.10.2.min.js" type="text/javascript"></script>  -->
 
 <?php $js_lang=Yii::app()->functions->jsLanguageAdmin(); ?>
 <?php $js_lang_validator=Yii::app()->functions->jsLanguageValidator();?>
@@ -173,7 +212,6 @@ var upload_url='<?php echo Yii::app()->request->baseUrl;?>/upload';
 <script src="<?php echo Yii::app()->request->baseUrl;?>/assets/vendor/JQV/form-validator/jquery.form-validator.min.js" type="text/javascript"></script>
 
 <script src="//code.jquery.com/ui/1.10.3/jquery-ui.js" type="text/javascript"></script>
-<!--<script src="http://code.jquery.com/ui/1.11.3/jquery-ui.min.js" type="text/javascript"></script>-->
 <script src="<?php echo Yii::app()->request->baseUrl;?>/assets/vendor/jquery.ui.timepicker-0.0.8.js" type="text/javascript"></script>
 
 <script src="<?php echo Yii::app()->request->baseUrl;?>/assets/js/uploader.js" type="text/javascript"></script>
@@ -192,9 +230,35 @@ var upload_url='<?php echo Yii::app()->request->baseUrl;?>/upload';
 <!--ICHECK-->
 
 <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl;?>/assets/vendor/chosen/chosen.jquery.min.js"></script>
+
+<!--Google Maps-->
+<script src="//maps.googleapis.com/maps/api/js?v=3.exp&"></script>
+<!--END Google Maps-->
+
 <script src="<?php echo Yii::app()->request->baseUrl;?>/assets/vendor/fancybox/source/jquery.fancybox.js"></script>
+<!--<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl;?>/assets/vendor/jQuery.print.js"></script>-->
+<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl;?>/assets/vendor/jquery.printelement.js"></script>
+
+<!--START JQPLOT-->
+<script src="<?php echo Yii::app()->request->baseUrl;?>/assets/vendor/jqplot/jquery.jqplot.min.js" type="text/javascript"></script>
+<script src="<?php echo Yii::app()->request->baseUrl;?>/assets/vendor/jqplot/excanvas.min.js" type="text/javascript"></script>
+<script src="<?php echo Yii::app()->request->baseUrl;?>/assets/vendor/jqplot/plugins/jqplot.barRenderer.min.js" type="text/javascript"></script>
+<script src="<?php echo Yii::app()->request->baseUrl;?>/assets/vendor/jqplot/plugins/jqplot.categoryAxisRenderer.min.js" type="text/javascript"></script>
+<script src="<?php echo Yii::app()->request->baseUrl;?>/assets/vendor/jqplot/plugins/jqplot.pointLabels.min.js" type="text/javascript"></script>
+<script src="<?php echo Yii::app()->request->baseUrl;?>/assets/vendor/jqplot/plugins/jqplot.json2.min.js" type="text/javascript"></script>
+
+<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl;?>/assets/vendor/jqplot/plugins/jqplot.dateAxisRenderer.min.js"></script>
+
+<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl;?>/assets/vendor/jqplot/plugins/jqplot.canvasTextRenderer.min.js"></script>
+
+<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl;?>/assets/vendor/jqplot/plugins/jqplot.canvasAxisTickRenderer.min.js"></script>
+<!--END JQPLOT-->
+
+<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl;?>/assets/vendor/jQuery.jPlayer.2.6.0/jquery.jplayer.min.js"></script>
 
 <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl;?>/assets/vendor/jQuery-TE_v.1.4.0/jquery-te-1.4.0.min.js"></script>
+
+<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl;?>/assets/vendor/intel/build/js/intlTelInput.js?ver=2.1.5"></script>
 
 <script src="<?php echo Yii::app()->request->baseUrl; ?>/assets/js/admin.js?ver=1" type="text/javascript"></script>  
 
