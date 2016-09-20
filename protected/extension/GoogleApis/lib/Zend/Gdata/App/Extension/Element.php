@@ -18,16 +18,17 @@
  * @subpackage App
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Author.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: Element.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
  * @see Zend_Gdata_App_Extension
  */
-require_once 'Zend/Gdata/App/Extension/Person.php';
+require_once 'Zend/Gdata/App/Extension.php';
 
 /**
- * Represents the atom:author element
+ * Class that represents elements which were not handled by other parsing
+ * code in the library.
  *
  * @category   Zend
  * @package    Zend_Gdata
@@ -35,9 +36,23 @@ require_once 'Zend/Gdata/App/Extension/Person.php';
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Gdata_App_Extension_Author extends Zend_Gdata_App_Extension_Person
+class Zend_Gdata_App_Extension_Element extends Zend_Gdata_App_Extension
 {
 
-    protected $_rootElement = 'author';
+    public function __construct($rootElement=null, $rootNamespace=null, $rootNamespaceURI=null, $text=null){
+        parent::__construct();
+        $this->_rootElement = $rootElement;
+        $this->_rootNamespace = $rootNamespace;
+        $this->_rootNamespaceURI = $rootNamespaceURI;
+        $this->_text = $text;
+    }
+
+    public function transferFromDOM($node)
+    {
+        parent::transferFromDOM($node);
+        $this->_rootNamespace = null;
+        $this->_rootNamespaceURI = $node->namespaceURI;
+        $this->_rootElement = $node->localName;
+    }
 
 }

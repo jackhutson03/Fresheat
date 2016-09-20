@@ -18,7 +18,7 @@
  * @subpackage App
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Author.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: Contributor.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
@@ -27,7 +27,7 @@
 require_once 'Zend/Gdata/App/Extension/Person.php';
 
 /**
- * Represents the atom:author element
+ * Represents the atom:contributor element
  *
  * @category   Zend
  * @package    Zend_Gdata
@@ -35,9 +35,9 @@ require_once 'Zend/Gdata/App/Extension/Person.php';
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Gdata_App_Extension_Author extends Zend_Gdata_App_Extension_Person
+class Zend_Gdata_App_Extension_Contributor extends Zend_Gdata_App_Extension_Person
 {
 
-    protected $_rootElement = 'author';
+    protected $_rootElement = 'contributor';
 
 }
