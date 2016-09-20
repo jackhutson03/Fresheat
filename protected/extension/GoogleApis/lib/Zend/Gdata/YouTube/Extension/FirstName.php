@@ -18,7 +18,7 @@
  * @subpackage YouTube
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Status.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: FirstName.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
@@ -27,7 +27,7 @@
 require_once 'Zend/Gdata/Extension.php';
 
 /**
- * Represents the yt:status element
+ * Represents the yt:firstName element
  *
  * @category   Zend
  * @package    Zend_Gdata
@@ -35,10 +35,10 @@ require_once 'Zend/Gdata/Extension.php';
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Gdata_YouTube_Extension_Status extends Zend_Gdata_Extension
+class Zend_Gdata_YouTube_Extension_FirstName extends Zend_Gdata_Extension
 {
 
-    protected $_rootElement = 'status';
+    protected $_rootElement = 'firstName';
     protected $_rootNamespace = 'yt';
 
     public function __construct($text = null)

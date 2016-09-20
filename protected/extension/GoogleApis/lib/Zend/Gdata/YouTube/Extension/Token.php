@@ -18,7 +18,7 @@
  * @subpackage YouTube
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Status.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: Token.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
@@ -27,7 +27,7 @@
 require_once 'Zend/Gdata/Extension.php';
 
 /**
- * Represents the yt:status element
+ * Represents the yt:token element used by the YouTube data API
  *
  * @category   Zend
  * @package    Zend_Gdata
@@ -35,17 +35,36 @@ require_once 'Zend/Gdata/Extension.php';
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Gdata_YouTube_Extension_Status extends Zend_Gdata_Extension
+class Zend_Gdata_YouTube_Extension_Token extends Zend_Gdata_App_Extension
 {
 
-    protected $_rootElement = 'status';
     protected $_rootNamespace = 'yt';
+    protected $_rootElement = 'token';
 
+    /**
+     * Constructs a new Zend_Gdata_YouTube_Extension_Token object.
+     */
     public function __construct($text = null)
     {
         $this->registerAllNamespaces(Zend_Gdata_YouTube::$namespaces);
         parent::__construct();
         $this->_text = $text;
+    }
+
+    /**
+     * Retrieves a DOMElement which corresponds to this element and all
+     * child properties.  This is used to build an entry back into a DOM
+     * and eventually XML text for sending to the server upon updates, or
+     * for application storage/persistence.
+     *
+     * @param DOMDocument $doc The DOMDocument used to construct DOMElements
+     * @return DOMElement The DOMElement representing this element and all
+     * child properties.
+     */
+    public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)
+    {
+        $element = parent::getDOM($doc, $majorVersion, $minorVersion);
+        return $element;
     }
 
 }
