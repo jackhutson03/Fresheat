@@ -18,7 +18,7 @@
  * @subpackage Gapps
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Name.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: Quota.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
@@ -32,9 +32,10 @@ require_once 'Zend/Gdata/Extension.php';
 require_once 'Zend/Gdata/Gapps.php';
 
 /**
- * Represents the apps:name element used by the Apps data API. This is used
- * to represent a user's full name. This class is usually contained within
- * instances of Zend_Gdata_Gapps_UserEntry.
+ * Represents the apps:quota element used by the Apps data API. This is
+ * used to indicate the amount of storage space available to a user. Quotas
+ * may not be able to be set, depending on the domain used. This class
+ * is usually contained within an instance of Zend_Gdata_Gapps_UserEntry.
  *
  * @category   Zend
  * @package    Zend_Gdata
@@ -42,40 +43,29 @@ require_once 'Zend/Gdata/Gapps.php';
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Gdata_Gapps_Extension_Name extends Zend_Gdata_Extension
+class Zend_Gdata_Gapps_Extension_Quota extends Zend_Gdata_Extension
 {
 
     protected $_rootNamespace = 'apps';
-    protected $_rootElement = 'name';
+    protected $_rootElement = 'quota';
 
     /**
-     * The associated user's family name.
+     * The amount of storage space available to the user in megabytes.
      *
-     * @var string
+     * @var integer
      */
-    protected $_familyName = null;
+    protected $_limit = null;
 
     /**
-     * The associated user's given name.
+     * Constructs a new Zend_Gdata_Gapps_Extension_Quota object.
      *
-     * @var string
+     * @param string $limit (optional) The limit, in bytes, for this quota.
      */
-    protected $_givenName = null;
-
-    /**
-     * Constructs a new Zend_Gdata_Gapps_Extension_Name object.
-     *
-     * @param string $familyName (optional) The familyName to be set for this
-     *          object.
-     * @param string $givenName (optional) The givenName to be set for this
-     *          object.
-     */
-    public function __construct($familyName = null, $givenName = null)
+    public function __construct($limit = null)
     {
         $this->registerAllNamespaces(Zend_Gdata_Gapps::$namespaces);
         parent::__construct();
-        $this->_familyName = $familyName;
-        $this->_givenName = $givenName;
+        $this->_limit = $limit;
     }
 
     /**
@@ -91,11 +81,8 @@ class Zend_Gdata_Gapps_Extension_Name extends Zend_Gdata_Extension
     public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)
     {
         $element = parent::getDOM($doc, $majorVersion, $minorVersion);
-        if ($this->_familyName !== null) {
-            $element->setAttribute('familyName', $this->_familyName);
-        }
-        if ($this->_givenName !== null) {
-            $element->setAttribute('givenName', $this->_givenName);
+        if ($this->_limit !== null) {
+            $element->setAttribute('limit', $this->_limit);
         }
         return $element;
     }
@@ -110,11 +97,8 @@ class Zend_Gdata_Gapps_Extension_Name extends Zend_Gdata_Extension
     protected function takeAttributeFromDOM($attribute)
     {
         switch ($attribute->localName) {
-        case 'familyName':
-            $this->_familyName = $attribute->nodeValue;
-            break;
-        case 'givenName':
-            $this->_givenName = $attribute->nodeValue;
+        case 'limit':
+            $this->_limit = $attribute->nodeValue;
             break;
         default:
             parent::takeAttributeFromDOM($attribute);
@@ -122,50 +106,27 @@ class Zend_Gdata_Gapps_Extension_Name extends Zend_Gdata_Extension
     }
 
     /**
-     * Get the value for this element's familyName attribute.
+     * Get the value for this element's limit attribute.
      *
-     * @see setFamilyName
+     * @see setLimit
      * @return string The requested attribute.
      */
-    public function getFamilyName()
+    public function getLimit()
     {
-        return $this->_familyName;
+        return $this->_limit;
     }
 
     /**
-     * Set the value for this element's familyName attribute. This
-     * represents a user's family name.
+     * Set the value for this element's limit attribute. This is the amount
+     * of storage space, in bytes, that should be made available to
+     * the associated user.
      *
      * @param string $value The desired value for this attribute.
-     * @return Zend_Gdata_Gapps_Extension_Name Provides a fluent interface..
+     * @return Zend_Gdata_Gapps_Extension_Quota Provides a fluent interface.
      */
-    public function setFamilyName($value)
+    public function setLimit($value)
     {
-        $this->_familyName = $value;
-        return $this;
-    }
-
-    /**
-     * Get the value for this element's givenName attribute.
-     *
-     * @see setGivenName
-     * @return string The requested attribute.
-     */
-    public function getGivenName()
-    {
-        return $this->_givenName;
-    }
-
-    /**
-     * Set the value for this element's givenName attribute. This
-     * represents a user's given name.
-     *
-     * @param string $value The desired value for this attribute.
-     * @return Zend_Gdata_Gapps_Extension_Name Provides a fluent interface.
-     */
-    public function setGivenName($value)
-    {
-        $this->_givenName = $value;
+        $this->_limit = $value;
         return $this;
     }
 
@@ -175,7 +136,7 @@ class Zend_Gdata_Gapps_Extension_Name extends Zend_Gdata_Extension
      */
     public function __toString()
     {
-        return $this->getGivenName() . ' ' . $this->getFamilyName();
+        return $this->getLimit();
     }
 
 }

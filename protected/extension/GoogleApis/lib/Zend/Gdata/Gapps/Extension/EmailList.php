@@ -18,7 +18,7 @@
  * @subpackage Gapps
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Name.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: EmailList.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
@@ -32,9 +32,9 @@ require_once 'Zend/Gdata/Extension.php';
 require_once 'Zend/Gdata/Gapps.php';
 
 /**
- * Represents the apps:name element used by the Apps data API. This is used
- * to represent a user's full name. This class is usually contained within
- * instances of Zend_Gdata_Gapps_UserEntry.
+ * Represents the apps:emailList element used by the Apps data API. This
+ * class represents properties of an email list and is usually contained
+ * within an instance of Zend_Gdata_Gapps_EmailListEntry.
  *
  * @category   Zend
  * @package    Zend_Gdata
@@ -42,40 +42,30 @@ require_once 'Zend/Gdata/Gapps.php';
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Gdata_Gapps_Extension_Name extends Zend_Gdata_Extension
+class Zend_Gdata_Gapps_Extension_EmailList extends Zend_Gdata_Extension
 {
 
     protected $_rootNamespace = 'apps';
-    protected $_rootElement = 'name';
+    protected $_rootElement = 'emailList';
 
     /**
-     * The associated user's family name.
+     * The name of the email list. This name is used as the email address
+     * for this list.
      *
      * @var string
      */
-    protected $_familyName = null;
+    protected $_name = null;
 
     /**
-     * The associated user's given name.
+     * Constructs a new Zend_Gdata_Gapps_Extension_EmailList object.
      *
-     * @var string
+     * @param string $name (optional) The name to be used for this email list.
      */
-    protected $_givenName = null;
-
-    /**
-     * Constructs a new Zend_Gdata_Gapps_Extension_Name object.
-     *
-     * @param string $familyName (optional) The familyName to be set for this
-     *          object.
-     * @param string $givenName (optional) The givenName to be set for this
-     *          object.
-     */
-    public function __construct($familyName = null, $givenName = null)
+    public function __construct($name = null)
     {
         $this->registerAllNamespaces(Zend_Gdata_Gapps::$namespaces);
         parent::__construct();
-        $this->_familyName = $familyName;
-        $this->_givenName = $givenName;
+        $this->_name = $name;
     }
 
     /**
@@ -91,11 +81,8 @@ class Zend_Gdata_Gapps_Extension_Name extends Zend_Gdata_Extension
     public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)
     {
         $element = parent::getDOM($doc, $majorVersion, $minorVersion);
-        if ($this->_familyName !== null) {
-            $element->setAttribute('familyName', $this->_familyName);
-        }
-        if ($this->_givenName !== null) {
-            $element->setAttribute('givenName', $this->_givenName);
+        if ($this->_name !== null) {
+            $element->setAttribute('name', $this->_name);
         }
         return $element;
     }
@@ -110,11 +97,8 @@ class Zend_Gdata_Gapps_Extension_Name extends Zend_Gdata_Extension
     protected function takeAttributeFromDOM($attribute)
     {
         switch ($attribute->localName) {
-        case 'familyName':
-            $this->_familyName = $attribute->nodeValue;
-            break;
-        case 'givenName':
-            $this->_givenName = $attribute->nodeValue;
+        case 'name':
+            $this->_name = $attribute->nodeValue;
             break;
         default:
             parent::takeAttributeFromDOM($attribute);
@@ -122,60 +106,39 @@ class Zend_Gdata_Gapps_Extension_Name extends Zend_Gdata_Extension
     }
 
     /**
-     * Get the value for this element's familyName attribute.
+     * Get the value for this element's name attribute.
      *
-     * @see setFamilyName
+     * @see setName
      * @return string The requested attribute.
      */
-    public function getFamilyName()
+    public function getName()
     {
-        return $this->_familyName;
+        return $this->_name;
     }
 
     /**
-     * Set the value for this element's familyName attribute. This
-     * represents a user's family name.
+     * Set the value for this element's name attribute. This is the unique
+     * name which will be used to identify this email list within this
+     * domain, and will be used to form this email list's email address.
      *
      * @param string $value The desired value for this attribute.
-     * @return Zend_Gdata_Gapps_Extension_Name Provides a fluent interface..
+     * @return Zend_Gdata_Gapps_Extension_EmailList The element being modified.
      */
-    public function setFamilyName($value)
+    public function setName($value)
     {
-        $this->_familyName = $value;
-        return $this;
-    }
-
-    /**
-     * Get the value for this element's givenName attribute.
-     *
-     * @see setGivenName
-     * @return string The requested attribute.
-     */
-    public function getGivenName()
-    {
-        return $this->_givenName;
-    }
-
-    /**
-     * Set the value for this element's givenName attribute. This
-     * represents a user's given name.
-     *
-     * @param string $value The desired value for this attribute.
-     * @return Zend_Gdata_Gapps_Extension_Name Provides a fluent interface.
-     */
-    public function setGivenName($value)
-    {
-        $this->_givenName = $value;
+        $this->_name = $value;
         return $this;
     }
 
     /**
      * Magic toString method allows using this directly via echo
      * Works best in PHP >= 4.2.0
+     *
+     * @return string
      */
     public function __toString()
     {
-        return $this->getGivenName() . ' ' . $this->getFamilyName();
+        return $this->getName();
     }
 
 }
