@@ -18,7 +18,7 @@
  * @subpackage Geo
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: GeoRssWhere.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: GmlPoint.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
@@ -32,13 +32,13 @@ require_once 'Zend/Gdata/Extension.php';
 require_once 'Zend/Gdata/Geo.php';
 
 /**
- * @see Zend_Gdata_Geo_Extension_GmlPoint
+ * @see Zend_Gdata_Geo_Extension_GmlPos
  */
-require_once 'Zend/Gdata/Geo/Extension/GmlPoint.php';
+require_once 'Zend/Gdata/Geo/Extension/GmlPos.php';
 
 
 /**
- * Represents the georss:where element used by the Gdata Geo extensions.
+ * Represents the gml:point element used by the Gdata Geo extensions.
  *
  * @category   Zend
  * @package    Zend_Gdata
@@ -46,30 +46,30 @@ require_once 'Zend/Gdata/Geo/Extension/GmlPoint.php';
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Gdata_Geo_Extension_GeoRssWhere extends Zend_Gdata_Extension
+class Zend_Gdata_Geo_Extension_GmlPoint extends Zend_Gdata_Extension
 {
 
-    protected $_rootNamespace = 'georss';
-    protected $_rootElement = 'where';
+    protected $_rootNamespace = 'gml';
+    protected $_rootElement = 'Point';
 
     /**
-     * The point location for this geo element
+     * The position represented by this GmlPoint
      *
-     * @var Zend_Gdata_Geo_Extension_GmlPoint
+     * @var Zend_Gdata_Geo_Extension_GmlPos
      */
-    protected $_point = null;
+    protected $_pos = null;
 
     /**
      * Create a new instance.
      *
-     * @param Zend_Gdata_Geo_Extension_GmlPoint $point (optional) Point to which
+     * @param Zend_Gdata_Geo_Extension_GmlPos $pos (optional) Pos to which this
      *          object should be initialized.
      */
-    public function __construct($point = null)
+    public function __construct($pos = null)
     {
         $this->registerAllNamespaces(Zend_Gdata_Geo::$namespaces);
         parent::__construct();
-        $this->setPoint($point);
+        $this->setPos($pos);
     }
 
     /**
@@ -84,8 +84,8 @@ class Zend_Gdata_Geo_Extension_GeoRssWhere extends Zend_Gdata_Extension
     public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)
     {
         $element = parent::getDOM($doc, $majorVersion, $minorVersion);
-        if ($this->_point !== null) {
-            $element->appendChild($this->_point->getDOM($element->ownerDocument));
+        if ($this->_pos !== null) {
+            $element->appendChild($this->_pos->getDOM($element->ownerDocument));
         }
         return $element;
     }
@@ -101,35 +101,36 @@ class Zend_Gdata_Geo_Extension_GeoRssWhere extends Zend_Gdata_Extension
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
 
         switch ($absoluteNodeName) {
-            case $this->lookupNamespace('gml') . ':' . 'Point';
-                $point = new Zend_Gdata_Geo_Extension_GmlPoint();
-                $point->transferFromDOM($child);
-                $this->_point = $point;
+            case $this->lookupNamespace('gml') . ':' . 'pos';
+                $pos = new Zend_Gdata_Geo_Extension_GmlPos();
+                $pos->transferFromDOM($child);
+                $this->_pos = $pos;
                 break;
         }
     }
 
     /**
-     * Get the value for this element's point attribute.
+     * Get the value for this element's pos attribute.
      *
-     * @see setPoint
-     * @return Zend_Gdata_Geo_Extension_GmlPoint The requested attribute.
+     * @see setPos
+     * @return Zend_Gdata_Geo_Extension_GmlPos The requested attribute.
      */
-    public function getPoint()
+    public function getPos()
     {
-        return $this->_point;
+        return $this->_pos;
     }
 
     /**
-     * Set the value for this element's point attribute.
+     * Set the value for this element's distance attribute.
      *
-     * @param Zend_Gdata_Geo_Extension_GmlPoint $value The desired value for this attribute.
-     * @return Zend_Gdata_Geo_Extension_GeoRssWhere Provides a fluent interface
+     * @param Zend_Gdata_Geo_Extension_GmlPos $value The desired value for this attribute
+     * @return Zend_Gdata_Geo_Extension_GmlPoint Provides a fluent interface
      */
-    public function setPoint($value)
+    public function setPos($value)
     {
-        $this->_point = $value;
+        $this->_pos = $value;
         return $this;
     }
+
 
 }
