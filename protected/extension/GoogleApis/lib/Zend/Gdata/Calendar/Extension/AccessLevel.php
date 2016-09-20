@@ -18,7 +18,7 @@
  * @subpackage Calendar
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Color.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: AccessLevel.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
@@ -27,8 +27,7 @@
 require_once 'Zend/Gdata/Extension.php';
 
 /**
- * Represents the gCal:color element used by the Calendar data API
- * to define the color of a calendar in the UI.
+ * Represents the gCal:accessLevel element used by the Calendar data API
  *
  * @category   Zend
  * @package    Zend_Gdata
@@ -36,15 +35,15 @@ require_once 'Zend/Gdata/Extension.php';
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Gdata_Calendar_Extension_Color extends Zend_Gdata_Extension
+class Zend_Gdata_Calendar_Extension_AccessLevel extends Zend_Gdata_Extension
 {
 
     protected $_rootNamespace = 'gCal';
-    protected $_rootElement = 'color';
+    protected $_rootElement = 'accesslevel';
     protected $_value = null;
 
     /**
-     * Constructs a new Zend_Gdata_Calendar_Extension_Color object.
+     * Constructs a new Zend_Gdata_Calendar_Extension_AccessLevel object.
      * @param string $value (optional) The text content of the element.
      */
     public function __construct($value = null)
@@ -94,18 +93,19 @@ class Zend_Gdata_Calendar_Extension_Color extends Zend_Gdata_Extension
     /**
      * Get the value for this element's value attribute.
      *
-     * @return string The value associated with this attribute.
+     * @return string The attribute being modified.
      */
     public function getValue()
     {
         return $this->_value;
     }
 
+
     /**
      * Set the value for this element's value attribute.
      *
      * @param string $value The desired value for this attribute.
-     * @return Zend_Gdata_Calendar_Extension_Color The element being modified.
+     * @return Zend_Gdata_Calendar_Extension_Selected The element being modified.
      */
     public function setValue($value)
     {
@@ -119,7 +119,7 @@ class Zend_Gdata_Calendar_Extension_Color extends Zend_Gdata_Extension
      */
     public function __toString()
     {
-        return $this->_value;
+        return $this->getValue();
     }
 
 }

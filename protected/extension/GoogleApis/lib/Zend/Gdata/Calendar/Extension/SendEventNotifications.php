@@ -18,7 +18,7 @@
  * @subpackage Calendar
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Color.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: SendEventNotifications.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
@@ -27,8 +27,7 @@
 require_once 'Zend/Gdata/Extension.php';
 
 /**
- * Represents the gCal:color element used by the Calendar data API
- * to define the color of a calendar in the UI.
+ * Data model class to represent an entry's sendEventNotifications
  *
  * @category   Zend
  * @package    Zend_Gdata
@@ -36,16 +35,15 @@ require_once 'Zend/Gdata/Extension.php';
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Gdata_Calendar_Extension_Color extends Zend_Gdata_Extension
+class Zend_Gdata_Calendar_Extension_SendEventNotifications extends Zend_Gdata_Extension
 {
-
     protected $_rootNamespace = 'gCal';
-    protected $_rootElement = 'color';
+    protected $_rootElement = 'sendEventNotifications';
     protected $_value = null;
 
     /**
-     * Constructs a new Zend_Gdata_Calendar_Extension_Color object.
-     * @param string $value (optional) The text content of the element.
+     * Constructs a new Zend_Gdata_Extension_SendEventNotifications object.
+     * @param bool $value (optional) SendEventNotifications value as URI.
      */
     public function __construct($value = null)
     {
@@ -67,8 +65,8 @@ class Zend_Gdata_Calendar_Extension_Color extends Zend_Gdata_Extension
     public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)
     {
         $element = parent::getDOM($doc, $majorVersion, $minorVersion);
-        if ($this->_value != null) {
-            $element->setAttribute('value', $this->_value);
+        if ($this->_value !== null) {
+            $element->setAttribute('value', ($this->_value ? "true" : "false"));
         }
         return $element;
     }
@@ -84,7 +82,15 @@ class Zend_Gdata_Calendar_Extension_Color extends Zend_Gdata_Extension
     {
         switch ($attribute->localName) {
         case 'value':
-            $this->_value = $attribute->nodeValue;
+            if ($attribute->nodeValue == "true") {
+                $this->_value = true;
+            }
+            else if ($attribute->nodeValue == "false") {
+                $this->_value = false;
+            }
+            else {
+                throw new Zend_Gdata_App_InvalidArgumentException("Expected 'true' or 'false' for gCal:selected#value.");
+            }
             break;
         default:
             parent::takeAttributeFromDOM($attribute);
@@ -92,9 +98,9 @@ class Zend_Gdata_Calendar_Extension_Color extends Zend_Gdata_Extension
     }
 
     /**
-     * Get the value for this element's value attribute.
+     * Get the value for this element's Value attribute.
      *
-     * @return string The value associated with this attribute.
+     * @return string The requested attribute.
      */
     public function getValue()
     {
@@ -102,10 +108,10 @@ class Zend_Gdata_Calendar_Extension_Color extends Zend_Gdata_Extension
     }
 
     /**
-     * Set the value for this element's value attribute.
+     * Set the value for this element's Value attribute.
      *
      * @param string $value The desired value for this attribute.
-     * @return Zend_Gdata_Calendar_Extension_Color The element being modified.
+     * @return Zend_Gdata_Extension_SendEventNotifications The element being modified.
      */
     public function setValue($value)
     {
@@ -119,7 +125,8 @@ class Zend_Gdata_Calendar_Extension_Color extends Zend_Gdata_Extension
      */
     public function __toString()
     {
-        return $this->_value;
+        return $this->getValue();
     }
 
 }
+
