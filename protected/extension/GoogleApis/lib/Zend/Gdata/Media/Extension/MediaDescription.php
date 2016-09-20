@@ -18,7 +18,7 @@
  * @subpackage Media
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: MediaText.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: MediaDescription.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
@@ -27,7 +27,7 @@
 require_once 'Zend/Gdata/App/Extension.php';
 
 /**
- * Represents the media:text element
+ * Represents the media:description element
  *
  * @category   Zend
  * @package    Zend_Gdata
@@ -35,10 +35,10 @@ require_once 'Zend/Gdata/App/Extension.php';
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Gdata_Media_Extension_MediaText extends Zend_Gdata_Extension
+class Zend_Gdata_Media_Extension_MediaDescription extends Zend_Gdata_Extension
 {
 
-    protected $_rootElement = 'text';
+    protected $_rootElement = 'description';
     protected $_rootNamespace = 'media';
 
     /**
@@ -47,39 +47,15 @@ class Zend_Gdata_Media_Extension_MediaText extends Zend_Gdata_Extension
     protected $_type = null;
 
     /**
-     * @var string
+     * @param string $text
+     * @param string $type
      */
-    protected $_lang = null;
-
-    /**
-     * @var string
-     */
-    protected $_start = null;
-
-    /**
-     * @var string
-     */
-    protected $_end = null;
-
-    /**
-     * Constructs a new MediaText element
-     *
-     * @param $text string
-     * @param $type string
-     * @param $lang string
-     * @param $start string
-     * @param $end string
-     */
-    public function __construct($text = null, $type = null, $lang = null,
-            $start = null, $end = null)
+    public function __construct($text = null, $type = null)
     {
         $this->registerAllNamespaces(Zend_Gdata_Media::$namespaces);
         parent::__construct();
-        $this->_text = $text;
         $this->_type = $type;
-        $this->_lang = $lang;
-        $this->_start = $start;
-        $this->_end = $end;
+        $this->_text = $text;
     }
 
     /**
@@ -98,15 +74,6 @@ class Zend_Gdata_Media_Extension_MediaText extends Zend_Gdata_Extension
         if ($this->_type !== null) {
             $element->setAttribute('type', $this->_type);
         }
-        if ($this->_lang !== null) {
-            $element->setAttribute('lang', $this->_lang);
-        }
-        if ($this->_start !== null) {
-            $element->setAttribute('start', $this->_start);
-        }
-        if ($this->_end !== null) {
-            $element->setAttribute('end', $this->_end);
-        }
         return $element;
     }
 
@@ -123,15 +90,6 @@ class Zend_Gdata_Media_Extension_MediaText extends Zend_Gdata_Extension
         case 'type':
             $this->_type = $attribute->nodeValue;
             break;
-        case 'lang':
-            $this->_lang = $attribute->nodeValue;
-            break;
-        case 'start':
-            $this->_start = $attribute->nodeValue;
-            break;
-        case 'end':
-            $this->_end = $attribute->nodeValue;
-            break;
         default:
             parent::takeAttributeFromDOM($attribute);
         }
@@ -147,7 +105,7 @@ class Zend_Gdata_Media_Extension_MediaText extends Zend_Gdata_Extension
 
     /**
      * @param string $value
-     * @return Zend_Gdata_Media_Extension_MediaText Provides a fluent interface
+     * @return Zend_Gdata_Media_Extension_MediaDescription Provides a fluent interface
      */
     public function setType($value)
     {
@@ -155,57 +113,4 @@ class Zend_Gdata_Media_Extension_MediaText extends Zend_Gdata_Extension
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getLang()
-    {
-        return $this->_lang;
-    }
-
-    /**
-     * @param string $value
-     * @return Zend_Gdata_Media_Extension_MediaText Provides a fluent interface
-     */
-    public function setLang($value)
-    {
-        $this->_lang = $value;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getStart()
-    {
-        return $this->_start;
-    }
-
-    /**
-     * @param string $value
-     * @return Zend_Gdata_Media_Extension_MediaText Provides a fluent interface
-     */
-    public function setStart($value)
-    {
-        $this->_start = $value;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getEnd()
-    {
-        return $this->_end;
-    }
-
-    /**
-     * @param string $value
-     * @return Zend_Gdata_Media_Extension_MediaText Provides a fluent interface
-     */
-    public function setEnd($value)
-    {
-        $this->_end = $value;
-        return $this;
-    }
 }

@@ -18,7 +18,7 @@
  * @subpackage Media
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: MediaText.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: MediaThumbnail.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
@@ -27,7 +27,7 @@
 require_once 'Zend/Gdata/App/Extension.php';
 
 /**
- * Represents the media:text element
+ * Represents the media:thumbnail element
  *
  * @category   Zend
  * @package    Zend_Gdata
@@ -35,51 +35,49 @@ require_once 'Zend/Gdata/App/Extension.php';
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Gdata_Media_Extension_MediaText extends Zend_Gdata_Extension
+class Zend_Gdata_Media_Extension_MediaThumbnail extends Zend_Gdata_Extension
 {
 
-    protected $_rootElement = 'text';
+    protected $_rootElement = 'thumbnail';
     protected $_rootNamespace = 'media';
 
     /**
      * @var string
      */
-    protected $_type = null;
+    protected $_url = null;
+
+    /**
+     * @var int
+     */
+    protected $_width = null;
+
+    /**
+     * @var int
+     */
+    protected $_height = null;
 
     /**
      * @var string
      */
-    protected $_lang = null;
+    protected $_time = null;
 
     /**
-     * @var string
-     */
-    protected $_start = null;
-
-    /**
-     * @var string
-     */
-    protected $_end = null;
-
-    /**
-     * Constructs a new MediaText element
+     * Constructs a new MediaThumbnail element
      *
-     * @param $text string
-     * @param $type string
-     * @param $lang string
-     * @param $start string
-     * @param $end string
+     * @param string $url
+     * @param int $width
+     * @param int $height
+     * @param string $time
      */
-    public function __construct($text = null, $type = null, $lang = null,
-            $start = null, $end = null)
+    public function __construct($url = null, $width = null, $height = null,
+            $time = null)
     {
         $this->registerAllNamespaces(Zend_Gdata_Media::$namespaces);
         parent::__construct();
-        $this->_text = $text;
-        $this->_type = $type;
-        $this->_lang = $lang;
-        $this->_start = $start;
-        $this->_end = $end;
+        $this->_url = $url;
+        $this->_width = $width;
+        $this->_height = $height;
+        $this->_time = $time ;
     }
 
     /**
@@ -95,17 +93,17 @@ class Zend_Gdata_Media_Extension_MediaText extends Zend_Gdata_Extension
     public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)
     {
         $element = parent::getDOM($doc, $majorVersion, $minorVersion);
-        if ($this->_type !== null) {
-            $element->setAttribute('type', $this->_type);
+        if ($this->_url !== null) {
+            $element->setAttribute('url', $this->_url);
         }
-        if ($this->_lang !== null) {
-            $element->setAttribute('lang', $this->_lang);
+        if ($this->_width !== null) {
+            $element->setAttribute('width', $this->_width);
         }
-        if ($this->_start !== null) {
-            $element->setAttribute('start', $this->_start);
+        if ($this->_height !== null) {
+            $element->setAttribute('height', $this->_height);
         }
-        if ($this->_end !== null) {
-            $element->setAttribute('end', $this->_end);
+        if ($this->_time !== null) {
+            $element->setAttribute('time', $this->_time);
         }
         return $element;
     }
@@ -120,17 +118,17 @@ class Zend_Gdata_Media_Extension_MediaText extends Zend_Gdata_Extension
     protected function takeAttributeFromDOM($attribute)
     {
         switch ($attribute->localName) {
-        case 'type':
-            $this->_type = $attribute->nodeValue;
+        case 'url':
+            $this->_url = $attribute->nodeValue;
             break;
-        case 'lang':
-            $this->_lang = $attribute->nodeValue;
+        case 'width':
+            $this->_width = $attribute->nodeValue;
             break;
-        case 'start':
-            $this->_start = $attribute->nodeValue;
+        case 'height':
+            $this->_height = $attribute->nodeValue;
             break;
-        case 'end':
-            $this->_end = $attribute->nodeValue;
+        case 'time':
+            $this->_time = $attribute->nodeValue;
             break;
         default:
             parent::takeAttributeFromDOM($attribute);
@@ -140,72 +138,73 @@ class Zend_Gdata_Media_Extension_MediaText extends Zend_Gdata_Extension
     /**
      * @return string
      */
-    public function getType()
+    public function getUrl()
     {
-        return $this->_type;
+        return $this->_url;
     }
 
     /**
      * @param string $value
-     * @return Zend_Gdata_Media_Extension_MediaText Provides a fluent interface
+     * @return Zend_Gdata_Media_Extension_MediaThumbnail Provides a fluent interface
      */
-    public function setType($value)
+    public function setUrl($value)
     {
-        $this->_type = $value;
+        $this->_url = $value;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getWidth()
+    {
+        return $this->_width;
+    }
+
+    /**
+     * @param int $value
+     * @return Zend_Gdata_Media_Extension_MediaThumbnail Provides a fluent interface
+     */
+    public function setWidth($value)
+    {
+        $this->_width = $value;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getHeight()
+    {
+        return $this->_height;
+    }
+
+    /**
+     * @param int $value
+     * @return Zend_Gdata_Media_Extension_MediaThumbnail Provides a fluent interface
+     */
+    public function setHeight($value)
+    {
+        $this->_height = $value;
         return $this;
     }
 
     /**
      * @return string
      */
-    public function getLang()
+    public function getTime()
     {
-        return $this->_lang;
+        return $this->_time;
     }
 
     /**
      * @param string $value
-     * @return Zend_Gdata_Media_Extension_MediaText Provides a fluent interface
+     * @return Zend_Gdata_Media_Extension_MediaThumbnail Provides a fluent interface
      */
-    public function setLang($value)
+    public function setTime($value)
     {
-        $this->_lang = $value;
+        $this->_time = $value;
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getStart()
-    {
-        return $this->_start;
-    }
-
-    /**
-     * @param string $value
-     * @return Zend_Gdata_Media_Extension_MediaText Provides a fluent interface
-     */
-    public function setStart($value)
-    {
-        $this->_start = $value;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getEnd()
-    {
-        return $this->_end;
-    }
-
-    /**
-     * @param string $value
-     * @return Zend_Gdata_Media_Extension_MediaText Provides a fluent interface
-     */
-    public function setEnd($value)
-    {
-        $this->_end = $value;
-        return $this;
-    }
 }

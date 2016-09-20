@@ -18,7 +18,7 @@
  * @subpackage Media
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: MediaText.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: MediaCredit.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
@@ -27,7 +27,7 @@
 require_once 'Zend/Gdata/App/Extension.php';
 
 /**
- * Represents the media:text element
+ * Represents the media:credit element
  *
  * @category   Zend
  * @package    Zend_Gdata
@@ -35,51 +35,36 @@ require_once 'Zend/Gdata/App/Extension.php';
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Gdata_Media_Extension_MediaText extends Zend_Gdata_Extension
+class Zend_Gdata_Media_Extension_MediaCredit extends Zend_Gdata_Extension
 {
 
-    protected $_rootElement = 'text';
+    protected $_rootElement = 'credit';
     protected $_rootNamespace = 'media';
 
     /**
      * @var string
      */
-    protected $_type = null;
+    protected $_role = null;
 
     /**
      * @var string
      */
-    protected $_lang = null;
+    protected $_scheme = null;
 
     /**
-     * @var string
-     */
-    protected $_start = null;
-
-    /**
-     * @var string
-     */
-    protected $_end = null;
-
-    /**
-     * Constructs a new MediaText element
+     * Creates an individual MediaCredit object.
      *
-     * @param $text string
-     * @param $type string
-     * @param $lang string
-     * @param $start string
-     * @param $end string
+     * @param string $text
+     * @param string $role
+     * @param string $scheme
      */
-    public function __construct($text = null, $type = null, $lang = null,
-            $start = null, $end = null)
+    public function __construct($text = null, $role = null,  $scheme = null)
     {
         $this->registerAllNamespaces(Zend_Gdata_Media::$namespaces);
         parent::__construct();
         $this->_text = $text;
-        $this->_type = $type;
-        $this->_lang = $lang;
-        $this->_start = $start;
-        $this->_end = $end;
+        $this->_role = $role;
+        $this->_scheme = $scheme;
     }
 
     /**
@@ -95,17 +80,11 @@ class Zend_Gdata_Media_Extension_MediaText extends Zend_Gdata_Extension
     public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)
     {
         $element = parent::getDOM($doc, $majorVersion, $minorVersion);
-        if ($this->_type !== null) {
-            $element->setAttribute('type', $this->_type);
+        if ($this->_role !== null) {
+            $element->setAttribute('role', $this->_role);
         }
-        if ($this->_lang !== null) {
-            $element->setAttribute('lang', $this->_lang);
-        }
-        if ($this->_start !== null) {
-            $element->setAttribute('start', $this->_start);
-        }
-        if ($this->_end !== null) {
-            $element->setAttribute('end', $this->_end);
+        if ($this->_scheme !== null) {
+            $element->setAttribute('scheme', $this->_scheme);
         }
         return $element;
     }
@@ -120,17 +99,11 @@ class Zend_Gdata_Media_Extension_MediaText extends Zend_Gdata_Extension
     protected function takeAttributeFromDOM($attribute)
     {
         switch ($attribute->localName) {
-        case 'type':
-            $this->_type = $attribute->nodeValue;
+        case 'role':
+            $this->_role = $attribute->nodeValue;
             break;
-        case 'lang':
-            $this->_lang = $attribute->nodeValue;
-            break;
-        case 'start':
-            $this->_start = $attribute->nodeValue;
-            break;
-        case 'end':
-            $this->_end = $attribute->nodeValue;
+        case 'scheme':
+            $this->_scheme = $attribute->nodeValue;
             break;
         default:
             parent::takeAttributeFromDOM($attribute);
@@ -140,72 +113,37 @@ class Zend_Gdata_Media_Extension_MediaText extends Zend_Gdata_Extension
     /**
      * @return string
      */
-    public function getType()
+    public function getRole()
     {
-        return $this->_type;
+        return $this->_role;
     }
 
     /**
      * @param string $value
-     * @return Zend_Gdata_Media_Extension_MediaText Provides a fluent interface
+     * @return Zend_Gdata_Media_Extension_MediaCredit Provides a fluent interface
      */
-    public function setType($value)
+    public function setRole($value)
     {
-        $this->_type = $value;
+        $this->_role = $value;
         return $this;
     }
 
     /**
      * @return string
      */
-    public function getLang()
+    public function getScheme()
     {
-        return $this->_lang;
+        return $this->_scheme;
     }
 
     /**
      * @param string $value
-     * @return Zend_Gdata_Media_Extension_MediaText Provides a fluent interface
+     * @return Zend_Gdata_Media_Extension_MediaCredit Provides a fluent interface
      */
-    public function setLang($value)
+    public function setScheme($value)
     {
-        $this->_lang = $value;
+        $this->_scheme = $value;
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getStart()
-    {
-        return $this->_start;
-    }
-
-    /**
-     * @param string $value
-     * @return Zend_Gdata_Media_Extension_MediaText Provides a fluent interface
-     */
-    public function setStart($value)
-    {
-        $this->_start = $value;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getEnd()
-    {
-        return $this->_end;
-    }
-
-    /**
-     * @param string $value
-     * @return Zend_Gdata_Media_Extension_MediaText Provides a fluent interface
-     */
-    public function setEnd($value)
-    {
-        $this->_end = $value;
-        return $this;
-    }
 }
