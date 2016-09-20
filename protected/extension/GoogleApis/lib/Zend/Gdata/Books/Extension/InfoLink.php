@@ -16,9 +16,8 @@
  * @category   Zend
  * @package    Zend_Gdata
  * @subpackage Books
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AnnotationLink.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: InfoLink.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
@@ -27,7 +26,7 @@
 require_once 'Zend/Gdata/Books/Extension/BooksLink.php';
 
 /**
- * Describes an annotation link
+ * Describes an info link
  *
  * @category   Zend
  * @package    Zend_Gdata
@@ -35,13 +34,13 @@ require_once 'Zend/Gdata/Books/Extension/BooksLink.php';
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Gdata_Books_Extension_AnnotationLink extends
+class Zend_Gdata_Books_Extension_InfoLink extends
     Zend_Gdata_Books_Extension_BooksLink
 {
 
     /**
-     * Constructor for Zend_Gdata_Books_Extension_AnnotationLink which
-     * Describes an annotation link
+     * Constructor for Zend_Gdata_Books_Extension_InfoLink which
+     * Describes an info link
      *
      * @param string|null $href Linked resource URI
      * @param string|null $rel Forward relationship
@@ -49,8 +48,6 @@ class Zend_Gdata_Books_Extension_AnnotationLink extends
      * @param string|null $hrefLang Resource language
      * @param string|null $title Human-readable resource title
      * @param string|null $length Resource length in octets
-     * @param DOMElement $element (optional) DOMElement from which this
-     *          object should be constructed.
      */
     public function __construct($href = null, $rel = null, $type = null,
             $hrefLang = null, $title = null, $length = null)
@@ -60,4 +57,3 @@ class Zend_Gdata_Books_Extension_AnnotationLink extends
     }
 
 }
-
