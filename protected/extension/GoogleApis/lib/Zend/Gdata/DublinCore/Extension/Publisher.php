@@ -18,7 +18,7 @@
  * @subpackage DublinCore
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Title.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: Publisher.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
@@ -27,7 +27,7 @@
 require_once 'Zend/Gdata/Extension.php';
 
 /**
- * Name given to the resource
+ * Entity responsible for making the resource available
  *
  * @category   Zend
  * @package    Zend_Gdata
@@ -35,15 +35,15 @@ require_once 'Zend/Gdata/Extension.php';
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Gdata_DublinCore_Extension_Title extends Zend_Gdata_Extension
+class Zend_Gdata_DublinCore_Extension_Publisher extends Zend_Gdata_Extension
 {
 
     protected $_rootNamespace = 'dc';
-    protected $_rootElement = 'title';
+    protected $_rootElement = 'publisher';
 
     /**
-     * Constructor for Zend_Gdata_DublinCore_Extension_Title which
-     * Name given to the resource
+     * Constructor for Zend_Gdata_DublinCore_Extension_Publisher which
+     * Entity responsible for making the resource available
      *
      * @param DOMElement $element (optional) DOMElement from which this
      *          object should be constructed.
