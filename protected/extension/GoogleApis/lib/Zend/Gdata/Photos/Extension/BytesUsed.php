@@ -18,7 +18,7 @@
  * @subpackage Photos
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Access.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id: BytesUsed.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
@@ -32,9 +32,8 @@ require_once 'Zend/Gdata/Extension.php';
 require_once 'Zend/Gdata/Photos.php';
 
 /**
- * Represents the gphoto:access element used by the API.
- * This determines the visibility for an album, and can be either
- * the strings 'private' or 'public'.
+ * Represents the gphoto:bytesUsed element used by the API.
+ * This indicates the number of bytes of storage used by an album.
  *
  * @category   Zend
  * @package    Zend_Gdata
@@ -42,14 +41,14 @@ require_once 'Zend/Gdata/Photos.php';
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Gdata_Photos_Extension_Access extends Zend_Gdata_Extension
+class Zend_Gdata_Photos_Extension_BytesUsed extends Zend_Gdata_Extension
 {
 
     protected $_rootNamespace = 'gphoto';
-    protected $_rootElement = 'access';
+    protected $_rootElement = 'bytesUsed';
 
     /**
-     * Constructs a new Zend_Gdata_Photos_Extension_Access object.
+     * Constructs a new Zend_Gdata_Photos_Extension_BytesUsed object.
      *
      * @param string $text (optional) The value to represent.
      */
